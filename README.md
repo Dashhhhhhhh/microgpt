@@ -1,7 +1,5 @@
 # MicroGPT
 
-![MicroGPT Logo](assets/logo.png)
-
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![PyPI version](https://badge.fury.io/py/microgpt.svg)](https://badge.fury.io/py/microgpt)
@@ -77,29 +75,6 @@ cp .env.example .env
 # Edit .env to add your API keys
 ```
 
-## Documentation
-
-For detailed documentation, see the [docs directory](docs/) or visit our [online documentation](https://microgpt.readthedocs.io/).
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- Thanks to the OpenAI team for their amazing models
-- Inspired by the AI agent frameworks community
-
----
-
-Built with ❤️ by [Your Name/Organization]
