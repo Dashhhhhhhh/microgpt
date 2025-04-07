@@ -20,6 +20,12 @@ from microgpt.memory import JSONFileStorage
 from microgpt.utils import log_calls
 
 
+# Define the base directory for the project (root of microgpt)
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
+# Default memory path relative to the base directory
+DEFAULT_MEMORY_PATH = os.path.join(BASE_DIR, "data", "chat_memory.json")
+
+
 class ConversationalAgent(LLMAgent):
     """
     A conversational agent that maintains conversation history.
@@ -29,7 +35,7 @@ class ConversationalAgent(LLMAgent):
     """
     
     def __init__(self, persona="helpful assistant", model="gpt-3.5-turbo", 
-                 memory_path="./data/chat_memory.json", max_history=10, **kwargs):
+                 memory_path=DEFAULT_MEMORY_PATH, max_history=10, **kwargs):
         """
         Initialize the conversational agent.
         
@@ -52,8 +58,9 @@ class ConversationalAgent(LLMAgent):
         api_key = os.getenv("OPENAI_API_KEY")
         provider = OpenAIProvider(api_key=api_key, model=model)
         
-        # Set up persistent memory
-        os.makedirs(os.path.dirname(memory_path), exist_ok=True)
+        # Set up persistent memory with absolute path
+        memory_dir = os.path.dirname(memory_path)
+        os.makedirs(memory_dir, exist_ok=True)
         memory = JSONFileStorage(memory_path)
         
         # Initialize the base agent
@@ -69,11 +76,16 @@ class ConversationalAgent(LLMAgent):
         # Store additional properties
         self.persona = persona
         self.max_history = max_history
-        self.conversation_id = f"conversation_{int(time.time())}"
+        # Use a fixed conversation ID if you want conversations to persist across sessions
+        # or keep the timestamped version for new conversations each time
+        self.conversation_id = "main_conversation"  # Fixed ID for persistence
         
         # Initialize conversation history
         if not self.recall(self.conversation_id):
             self.remember(self.conversation_id, {"turns": []})
+            print(f"Created new conversation history at: {memory_path}")
+        else:
+            print(f"Loaded existing conversation history from: {memory_path}")
     
     @log_calls
     def chat(self, user_message):
@@ -137,7 +149,7 @@ def main():
     )
     parser.add_argument(
         "--memory", "-mem",
-        default="./data/chat_memory.json",
+        default=DEFAULT_MEMORY_PATH,
         help="Path to store conversation memory"
     )
     parser.add_argument(
@@ -163,6 +175,7 @@ def main():
     print(f"Chatbot initialized with persona: {args.persona}")
     print("Type 'exit', 'quit', or 'bye' to end the conversation.")
     print("Type 'memory' to see what the chatbot remembers.")
+    print("Type 'clear' to clear conversation history.")
     print("="*50)
     
     # Start conversation loop
@@ -183,7 +196,7 @@ def main():
                 print("CONVERSATION HISTORY")
                 print("="*50)
                 
-                if conversation and "turns" in conversation:
+                if conversation and "turns" in conversation and conversation["turns"]:
                     for i, turn in enumerate(conversation["turns"]):
                         print(f"\nTurn {i+1}:")
                         print(f"User: {turn['user']}")
@@ -192,6 +205,12 @@ def main():
                     print("No conversation history found.")
                 
                 print("="*50)
+                continue
+            
+            # Check for clear history command
+            if user_message.lower() == "clear":
+                chatbot.remember(chatbot.conversation_id, {"turns": []})
+                print("\nConversation history cleared.")
                 continue
             
             # Generate response

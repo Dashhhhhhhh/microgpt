@@ -98,7 +98,9 @@ class OpenAIProvider(LLMProvider):
         params.update(kwargs)
         
         # Create messages for the chat completion
-        messages = [{"role": "user", "content": prompt}]
+        # Ensure prompt is converted to string if it's not already
+        content = str(prompt) if not isinstance(prompt, str) else prompt
+        messages = [{"role": "user", "content": content}]
         
         # Call the OpenAI API
         response = openai.chat.completions.create(
