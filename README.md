@@ -59,12 +59,12 @@ print(response)
 
 ## Examples
 
-Check out the [`/examples`](microgpt/examples) directory for complete working examples:
+Check out the [`/examples`](examples) directory for complete working examples:
 
-- [Summarization Agent](microgpt/examples/summarization_agent.py): Summarize text with customizable formats
-- [Conversational Chatbot](microgpt/examples/conversational_chatbot.py): Build a chatbot with memory
-- [News Research Assistant](microgpt/examples/news_research_assistant.py): Analyze articles with multiple agents in a pipeline
-- [Research Assistant Network](microgpt/examples/research_assistant_network.py): Complex agent network for research tasks
+- [Summarization Agent](examples/summarization_agent.py): Summarize text with customizable formats
+- [Conversational Chatbot](examples/conversational_chatbot.py): Build a chatbot with memory
+- [News Research Assistant](examples/news_research_assistant.py): Analyze articles with multiple agents in a pipeline
+- [Research Assistant Network](examples/research_assistant_network.py): Complex agent network for research tasks
 
 ## Environment Setup
 

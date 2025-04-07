@@ -126,17 +126,6 @@ class TokenTracker:
         
         return usage
     
-    def get_last_usage(self) -> Optional[Dict[str, Any]]:
-        """
-        Get the most recent token usage statistics.
-        
-        Returns:
-            dict: The most recent usage statistics, or None if no usage has been tracked.
-        """
-        if not self.history:
-            return None
-        return self.history[-1]
-    
     def get_total_usage(self) -> Dict[str, Any]:
         """
         Get total token usage statistics.

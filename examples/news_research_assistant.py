@@ -13,7 +13,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 
 # Add the parent directory to the path for importing the local package
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from microgpt import LLMAgent, OpenAIProvider
 from microgpt.web import WebSearch, WebPageReader
